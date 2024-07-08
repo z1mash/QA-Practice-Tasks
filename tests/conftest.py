@@ -5,7 +5,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(scope="function")
 def browser(playwright: Playwright):
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
