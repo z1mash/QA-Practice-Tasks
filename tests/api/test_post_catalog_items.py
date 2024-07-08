@@ -1,7 +1,8 @@
 import unittest
 import random
-from pages.request_sender import RequestSender
-from pages.request_params_creator import RequestParamsCreator
+from api.request_sender import RequestSender
+from api.request_params_creator import RequestParamsCreator
+
 
 class TestAPI(unittest.TestCase):
     def test_post_catalog_item(self):

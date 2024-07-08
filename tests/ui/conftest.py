@@ -3,7 +3,8 @@ from playwright.sync_api import Playwright
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
 
 @pytest.fixture(scope="function")
 def browser(playwright: Playwright):

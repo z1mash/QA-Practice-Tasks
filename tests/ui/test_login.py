@@ -1,10 +1,12 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 import pytest
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
+
 
 class TestLogin:
     @pytest.mark.parametrize("username, password, expected_message", [
