@@ -8,3 +8,16 @@ class RequestParamsCreator:
             'pageSize': pageSize,
             'api-version': self.api_version
         }
+    
+    @staticmethod
+    def create_catalog_items_put_params(api_version, item_data):
+        return {
+            'api-version': api_version,
+            'item_data': item_data
+        }
+    @staticmethod
+    def create_catalog_items_post_params(api_version, item_data):
+        return {
+            'api-version': api_version,
+            'item_data': item_data
+        }
