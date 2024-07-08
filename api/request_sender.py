@@ -48,7 +48,7 @@ class RequestSender:
         return requests.get(url, params=query_params)
 
     @staticmethod
-    def send_catalog_item_by_id_get(params):
+    def send_catalog_item_by_pic_get(params):
         url = f"{BASE_URL}{CATALOG_ITEM_PIC_ENDPOINT.format(catalogItemId=params['id'])}?api-version={params['api-version']}"
         return requests.get(url)
 
@@ -85,6 +85,14 @@ class RequestSender:
     @staticmethod
     def send_catalog_types_get(params):
         url = f"{BASE_URL}{CATALOG_TYPES_ENDPOINT}"
+        query_params = {
+            'api-version': params['api-version']
+        }
+        return requests.get(url, params=query_params)
+
+    @staticmethod
+    def send_catalog_brands_get(params):
+        url = f"{BASE_URL}{CATALOG_BRANDS_ENDPOINT}"
         query_params = {
             'api-version': params['api-version']
         }

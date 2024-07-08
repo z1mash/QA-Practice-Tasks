@@ -9,35 +9,24 @@ class TestAPI(unittest.TestCase):
     def setUpClass(cls):
         cls.params_creator = RequestParamsCreator(api_version='1.0')
 
-    # #должен быть 400, но возникает 500
-    # def test_post_catalog_item_without_name(self):
-    #     item_data = {
-    #         'description': 'This is a new item in the catalog',
-    #         'price': 10.99,
-    #         'pictureFileName': 'new_item.jpg',
-    #         'catalogTypeId': 1,
-    #         'catalogBrandId': 1,
-    #         'availableStock': 100,
-    #         'restockThreshold': 10,
-    #         'maxStockThreshold': 200,
-    #         'onReorder': False
-    #     }
-    #
-    #     post_params = self.params_creator.create_catalog_items_post_params(item_data=item_data)
-    #     response = RequestSender.send_catalog_items_post(post_params)
-    #
-    #     self.assertEqual(response.status_code, 400)
+    #должен быть 400, но возникает 500
+    def test_post_catalog_item_without_name(self):
+        item_data = {
+            'description': 'This is a new item in the catalog',
+            'price': 10.99,
+            'pictureFileName': '99.webp',
+            'catalogTypeId': 1,
+            'catalogBrandId': 1,
+            'availableStock': 100,
+            'restockThreshold': 10,
+            'maxStockThreshold': 200,
+            'onReorder': False
+        }
 
+        post_params = self.params_creator.create_catalog_items_post_params(item_data=item_data)
+        response = RequestSender.send_catalog_items_post(post_params)
 
-
-
-
-
-
-
-
-
-
+        self.assertEqual(response.status_code, 400)
 
     def test_post_and_get_item(self):
         unique_id = random.randint(10000, 99999)
@@ -47,7 +36,7 @@ class TestAPI(unittest.TestCase):
             'name': 'Test Item',
             'description': 'This is a test item',
             'price': 100,
-            'pictureFileName': 'test.jpg',
+            'pictureFileName': '99.webp',
             'catalogTypeId': 1,
             'catalogBrandId': 1,
             'availableStock': 10,

@@ -8,3 +8,4 @@ CATALOG_ITEMS_WITH_SEMANTIC_RELEVANCE_ENDPOINT = '/api/catalog/items/withsemanti
 CATALOG_ITEMS_BY_TYPE_AND_BRAND_ENDPOINT = '/api/catalog/items/type/{typeId}/brand/{brandId}'
 CATALOG_ITEMS_BY_BRAND_ENDPOINT = '/api/catalog/items/type/all/brand/{brandId}'
 CATALOG_TYPES_ENDPOINT = '/api/catalog/catalogtypes'
+CATALOG_BRANDS_ENDPOINT = '/api/catalog/catalogbrands'

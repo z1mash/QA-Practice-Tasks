@@ -82,3 +82,8 @@ class RequestParamsCreator:
         return {
             'api-version': self.api_version
         }
+
+    def create_catalog_brands_params(self):
+        return {
+            'api-version': self.api_version
+        }
