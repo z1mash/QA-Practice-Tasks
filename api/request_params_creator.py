@@ -9,17 +9,15 @@ class RequestParamsCreator:
             'api-version': self.api_version
         }
 
-    @staticmethod
-    def create_catalog_items_put_params(api_version, item_data):
+    def create_catalog_items_put_params(self, item_data):
         return {
-            'api-version': api_version,
+            'api-version': self.api_version,
             'item_data': item_data
         }
 
-    @staticmethod
-    def create_catalog_items_post_params(api_version, item_data):
+    def create_catalog_items_post_params(self, item_data):
         return {
-            'api-version': api_version,
+            'api-version': self.api_version,
             'item_data': item_data
         }
 
