@@ -1,13 +1,22 @@
 import unittest
+import allure
+import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
 
 
+@allure.feature('Catalog Items by Type and Brand Retrieval')
+@pytest.mark.get_catalog_items_by_type_and_brand
 class TestAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.params_creator = RequestParamsCreator(api_version='1.0')
 
+    @allure.story('Get Catalog Items by Type and Brand')
+    @allure.title('Test getting catalog items by type and brand')
+    @allure.description('This test verifies the retrieval of catalog items by a specific type and brand.')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.smoke
     def test_get_catalog_items_by_type_and_brand(self):
         pageIndex = 0
         pageSize = 10
@@ -23,5 +32,7 @@ class TestAPI(unittest.TestCase):
         items = response_data.get('data', [])
 
         for item in items:
-            self.assertEqual(item['catalogTypeId'], typeId, f"Item has incorrect catalogTypeId: {item['catalogTypeId']}")
-            self.assertEqual(item['catalogBrandId'], brandId, f"Item has incorrect catalogBrandId: {item['catalogBrandId']}")
+            self.assertEqual(item['catalogTypeId'], typeId,
+                             f"Item has incorrect catalogTypeId: {item['catalogTypeId']}")
+            self.assertEqual(item['catalogBrandId'], brandId,
+                             f"Item has incorrect catalogBrandId: {item['catalogBrandId']}")

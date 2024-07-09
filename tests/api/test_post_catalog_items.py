@@ -1,15 +1,23 @@
 import unittest
 import random
+import allure
+import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
 
 
+@allure.feature('Catalog Item Management')
+@pytest.mark.post_catalog_items
 class TestAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.params_creator = RequestParamsCreator(api_version='1.0')
 
-    #должен быть 400, но возникает 500
+    @allure.story('Post Catalog Item Without Name')
+    @allure.title('Test posting catalog item without name')
+    @allure.description('This test verifies the response when posting a catalog item without a name.')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.smoke
     def test_post_catalog_item_without_name(self):
         item_data = {
             'description': 'This is a new item in the catalog',
@@ -28,6 +36,11 @@ class TestAPI(unittest.TestCase):
 
         self.assertEqual(response.status_code, 400)
 
+    @allure.story('Post and Get Item')
+    @allure.title('Test posting and getting a catalog item')
+    @allure.description('This test verifies the creation and retrieval of a catalog item.')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.smoke
     def test_post_and_get_item(self):
         unique_id = random.randint(10000, 99999)
 

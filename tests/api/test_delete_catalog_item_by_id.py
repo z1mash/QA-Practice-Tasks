@@ -1,15 +1,23 @@
 import unittest
 import random
+import allure
+import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
 
 
+@allure.feature('Catalog Item Management')
+@pytest.mark.delete_catalog_item
 class TestAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.params_creator = RequestParamsCreator(api_version='1.0')
 
-    # не робит
+    @allure.story('Create and Delete Catalog Item')
+    @allure.title('Test creating and deleting a catalog item')
+    @allure.description('This test verifies the creation and deletion of a catalog item.')
+    @allure.severity(allure.severity_level.CRITICAL)
+    @pytest.mark.smoke
     def test_create_and_delete_catalog_item(self):
         unique_id = random.randint(10000, 99999)
 
@@ -38,6 +46,10 @@ class TestAPI(unittest.TestCase):
         get_response = RequestSender.send_catalog_item_by_id_get(get_params)
         self.assertEqual(get_response.status_code, 404, f"Unexpected status code: {get_response.status_code}")
 
+    @allure.story('Delete Non-Existing Catalog Item')
+    @allure.title('Test deleting a non-existing catalog item')
+    @allure.description('This test verifies the deletion of a non-existing catalog item.')
+    @allure.severity(allure.severity_level.NORMAL)
     def test_delete_non_existing_catalog_item(self):
         item_id = 9999
         params = self.params_creator.create_delete_catalog_item_by_id_params(item_id)

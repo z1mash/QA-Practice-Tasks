@@ -1,14 +1,23 @@
 import unittest
 import random
+import allure
+import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
 
 
+@allure.feature('Catalog Item Management')
+@pytest.mark.put_catalog_items
 class TestAPI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.params_creator = RequestParamsCreator(api_version='1.0')
 
+    @allure.story('Put Catalog Item Without Name')
+    @allure.title('Test putting catalog item without name')
+    @allure.description('This test verifies the response when updating a catalog item without a name.')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.smoke
     def test_put_catalog_item_without_name(self):
         item_data = {
             'description': 'This is an updated item in the catalog',
@@ -27,6 +36,11 @@ class TestAPI(unittest.TestCase):
 
         self.assertEqual(response.status_code, 404)
 
+    @allure.story('Post, Put and Get Item')
+    @allure.title('Test posting, putting and getting a catalog item')
+    @allure.description('This test verifies the creation, update, and retrieval of a catalog item.')
+    @allure.severity(allure.severity_level.NORMAL)
+    @pytest.mark.smoke
     def test_post_put_and_get_item(self):
         unique_id = random.randint(10000, 99999)
 
@@ -82,4 +96,3 @@ class TestAPI(unittest.TestCase):
         self.assertEqual(get_data['restockThreshold'], put_data['restockThreshold'])
         self.assertEqual(get_data['maxStockThreshold'], put_data['maxStockThreshold'])
         self.assertEqual(get_data['onReorder'], put_data['onReorder'])
-
