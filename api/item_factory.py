@@ -31,7 +31,7 @@ class ItemFactory:
         item = ItemFactory.create()
         item['name'] = name
         return item
-    
+
     @staticmethod
     @allure.step("Create a new item with a specific ID")
     def create_with_id(id):

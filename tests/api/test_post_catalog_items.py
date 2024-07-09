@@ -33,7 +33,6 @@ class TestAPI(unittest.TestCase):
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.smoke
     def test_post_and_get_item(self):
-
         post_data = ItemFactory.create()
         unique_id = post_data['id']
         post_params = self.params_creator.create_catalog_items_post_params(post_data)

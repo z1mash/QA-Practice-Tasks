@@ -1,5 +1,6 @@
 import allure
 
+
 class RequestParamsCreator:
     def __init__(self, api_version):
         self.api_version = api_version

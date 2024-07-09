@@ -1,5 +1,6 @@
 import allure
 
+
 class CheckoutPage:
     def __init__(self, browser):
         self.browser = browser

@@ -41,14 +41,13 @@ class TestAPI(unittest.TestCase):
 
         post_response = RequestSender.send_catalog_items_post(post_params)
         self.assertEqual(post_response.status_code, 201, f"Unexpected status code: {post_response.status_code}")
-        
+
         id = post_data['id']
         put_data = ItemFactory.create_with_id(id)
         put_params = self.params_creator.create_catalog_items_put_params(item_data=put_data)
 
         put_response = RequestSender.send_catalog_items_put(put_params)
         self.assertEqual(put_response.status_code, 201, f"Unexpected status code: {put_response.status_code}")
-        
 
         get_params = self.params_creator.create_catalog_item_by_id_params(id=put_data['id'])
         get_response = RequestSender.send_catalog_item_by_id_get(get_params)

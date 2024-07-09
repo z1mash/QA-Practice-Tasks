@@ -19,7 +19,6 @@ class TestAPI(unittest.TestCase):
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.smoke
     def test_create_and_delete_catalog_item(self):
-
         post_data = ItemFactory.create()
         unique_id = post_data['id']
 

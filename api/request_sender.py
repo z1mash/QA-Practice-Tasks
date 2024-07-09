@@ -2,6 +2,7 @@ import requests
 import allure
 from api.constants import *
 
+
 class RequestSender:
     @staticmethod
     @allure.step('Send GET request to catalog items endpoint')

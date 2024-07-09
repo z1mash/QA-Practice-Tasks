@@ -1,12 +1,11 @@
 import sys
 import os
 import allure
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-
 import pytest
 from pages.home_page import HomePage
 from pages.login_page import LoginPage
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 
 @allure.feature('Login Functionality')
