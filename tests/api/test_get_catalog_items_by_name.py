@@ -4,6 +4,7 @@ import allure
 import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
+from api.item_factory import ItemFactory
 
 
 @allure.feature('Catalog Items by Name Retrieval')
@@ -68,7 +69,6 @@ class TestAPI(unittest.TestCase):
 
         response = RequestSender.send_catalog_items(params)
         self.assertEqual(response.status_code, 200)
-        response_data = response.json()
 
     @allure.story('Create and Get Catalog Items with Same Name')
     @allure.title('Test creating and getting catalog items with the same name')
@@ -76,39 +76,13 @@ class TestAPI(unittest.TestCase):
     @allure.severity(allure.severity_level.NORMAL)
     def test_create_and_get_catalog_items_with_same_name(self):
         unique_name = f"TestItem_{random.randint(1000, 9999)}"
-        unique_id1 = random.randint(10000, 99999)
-        unique_id2 = random.randint(300, 1000)
 
-        item_data1 = {
-            'id': unique_id1,
-            'name': unique_name,
-            'description': 'This is a test item',
-            'price': 100,
-            'pictureFileName': 'test.jpg',
-            'catalogTypeId': 1,
-            'catalogBrandId': 1,
-            'availableStock': 10,
-            'restockThreshold': 5,
-            'maxStockThreshold': 20,
-            'onReorder': False
-        }
+        item_data1 = ItemFactory.create()
         create_params1 = self.params_creator.create_catalog_items_post_params(item_data=item_data1)
         create_response1 = RequestSender.send_catalog_items_post(create_params1)
         self.assertEqual(create_response1.status_code, 201)
 
-        item_data2 = {
-            'id': unique_id2,
-            'name': unique_name,
-            'description': 'This is another test item',
-            'price': 150,
-            'pictureFileName': 'test2.jpg',
-            'catalogTypeId': 2,
-            'catalogBrandId': 2,
-            'availableStock': 15,
-            'restockThreshold': 10,
-            'maxStockThreshold': 25,
-            'onReorder': True
-        }
+        item_data2 = ItemFactory.create()
         create_params2 = self.params_creator.create_catalog_items_post_params(item_data=item_data2)
         create_response2 = RequestSender.send_catalog_items_post(create_params2)
         self.assertEqual(create_response2.status_code, 201)

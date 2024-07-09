@@ -4,6 +4,7 @@ import allure
 import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
+from api.item_factory import ItemFactory
 
 
 @allure.feature('Catalog Items with Semantic Relevance Retrieval')
@@ -40,45 +41,9 @@ class TestAPI(unittest.TestCase):
         random_value2 = f"RANDOM2_{random.randint(1000, 9999)}"
         random_value3 = f"RANDOM3_{random.randint(1000, 9999)}"
 
-        item1 = {
-            'id': random.randint(10000, 99999),
-            'name': f"{value} {random_value1}",
-            'description': 'Test item 1',
-            'price': 100,
-            'pictureFileName': 'test1.jpg',
-            'catalogTypeId': 1,
-            'catalogBrandId': 1,
-            'availableStock': 10,
-            'restockThreshold': 5,
-            'maxStockThreshold': 20,
-            'onReorder': False
-        }
-        item2 = {
-            'id': random.randint(10000, 99999),
-            'name': f"{value} {random_value2}",
-            'description': 'Test item 2',
-            'price': 150,
-            'pictureFileName': 'test2.jpg',
-            'catalogTypeId': 2,
-            'catalogBrandId': 2,
-            'availableStock': 15,
-            'restockThreshold': 10,
-            'maxStockThreshold': 25,
-            'onReorder': True
-        }
-        item3 = {
-            'id': random.randint(10000, 99999),
-            'name': f"{value} {random_value3}",
-            'description': 'Test item 3',
-            'price': 200,
-            'pictureFileName': 'test3.jpg',
-            'catalogTypeId': 3,
-            'catalogBrandId': 3,
-            'availableStock': 20,
-            'restockThreshold': 15,
-            'maxStockThreshold': 30,
-            'onReorder': False
-        }
+        item1 = ItemFactory.create_with_name(f"{value} {random_value1}")
+        item2 = ItemFactory.create_with_name(f"{value} {random_value2}")
+        item3 = ItemFactory.create_with_name(f"{value} {random_value3}")
 
         create_params1 = self.params_creator.create_catalog_items_post_params(item_data=item1)
         create_response1 = RequestSender.send_catalog_items_post(create_params1)

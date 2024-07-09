@@ -1,9 +1,9 @@
 import unittest
-import random
 import allure
 import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
+from api.item_factory import ItemFactory
 
 
 @allure.feature('Catalog Item Management')
@@ -19,17 +19,8 @@ class TestAPI(unittest.TestCase):
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.smoke
     def test_post_catalog_item_without_name(self):
-        item_data = {
-            'description': 'This is a new item in the catalog',
-            'price': 10.99,
-            'pictureFileName': '99.webp',
-            'catalogTypeId': 1,
-            'catalogBrandId': 1,
-            'availableStock': 100,
-            'restockThreshold': 10,
-            'maxStockThreshold': 200,
-            'onReorder': False
-        }
+        item_data = ItemFactory.create()
+        del item_data['name']
 
         post_params = self.params_creator.create_catalog_items_post_params(item_data=item_data)
         response = RequestSender.send_catalog_items_post(post_params)
@@ -42,21 +33,9 @@ class TestAPI(unittest.TestCase):
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.smoke
     def test_post_and_get_item(self):
-        unique_id = random.randint(10000, 99999)
 
-        post_data = {
-            'id': unique_id,
-            'name': 'Test Item',
-            'description': 'This is a test item',
-            'price': 100,
-            'pictureFileName': '99.webp',
-            'catalogTypeId': 1,
-            'catalogBrandId': 1,
-            'availableStock': 10,
-            'restockThreshold': 5,
-            'maxStockThreshold': 20,
-            'onReorder': False
-        }
+        post_data = ItemFactory.create()
+        unique_id = post_data['id']
         post_params = self.params_creator.create_catalog_items_post_params(post_data)
 
         post_response = RequestSender.send_catalog_items_post(post_params)

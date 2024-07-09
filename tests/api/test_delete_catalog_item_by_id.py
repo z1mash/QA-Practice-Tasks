@@ -1,9 +1,9 @@
 import unittest
-import random
 import allure
 import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
+from api.item_factory import ItemFactory
 
 
 @allure.feature('Catalog Item Management')
@@ -19,21 +19,10 @@ class TestAPI(unittest.TestCase):
     @allure.severity(allure.severity_level.CRITICAL)
     @pytest.mark.smoke
     def test_create_and_delete_catalog_item(self):
-        unique_id = random.randint(10000, 99999)
 
-        post_data = {
-            'id': unique_id,
-            'name': 'Test Item',
-            'description': 'This is a test item',
-            'price': 100,
-            'pictureFileName': 'test.jpg',
-            'catalogTypeId': 1,
-            'catalogBrandId': 1,
-            'availableStock': 10,
-            'restockThreshold': 5,
-            'maxStockThreshold': 20,
-            'onReorder': False
-        }
+        post_data = ItemFactory.create()
+        unique_id = post_data['id']
+
         create_params = self.params_creator.create_catalog_items_post_params(post_data)
         create_response = RequestSender.send_catalog_items_post(create_params)
         self.assertEqual(create_response.status_code, 201)

@@ -4,6 +4,7 @@ import allure
 import pytest
 from api.request_sender import RequestSender
 from api.request_params_creator import RequestParamsCreator
+from api.item_factory import ItemFactory
 
 
 @allure.feature('Catalog Item Management')
@@ -19,17 +20,8 @@ class TestAPI(unittest.TestCase):
     @allure.severity(allure.severity_level.NORMAL)
     @pytest.mark.smoke
     def test_put_catalog_item_without_name(self):
-        item_data = {
-            'description': 'This is an updated item in the catalog',
-            'price': 10.99,
-            'pictureFileName': '99.webp',
-            'catalogTypeId': 1,
-            'catalogBrandId': 1,
-            'availableStock': 100,
-            'restockThreshold': 10,
-            'maxStockThreshold': 200,
-            'onReorder': False
-        }
+        item_data = ItemFactory.create()
+        del item_data['name']
 
         put_params = self.params_creator.create_catalog_items_put_params(item_data=item_data)
         response = RequestSender.send_catalog_items_put(put_params)
@@ -44,43 +36,21 @@ class TestAPI(unittest.TestCase):
     def test_post_put_and_get_item(self):
         unique_id = random.randint(10000, 99999)
 
-        post_data = {
-            'id': unique_id,
-            'name': 'Test Item',
-            'description': 'This is a test item',
-            'price': 100,
-            'pictureFileName': '99.webp',
-            'catalogTypeId': 1,
-            'catalogBrandId': 1,
-            'availableStock': 10,
-            'restockThreshold': 5,
-            'maxStockThreshold': 20,
-            'onReorder': False
-        }
+        post_data = ItemFactory.create()
         post_params = self.params_creator.create_catalog_items_post_params(item_data=post_data)
 
         post_response = RequestSender.send_catalog_items_post(post_params)
         self.assertEqual(post_response.status_code, 201, f"Unexpected status code: {post_response.status_code}")
-
-        put_data = {
-            'id': unique_id,
-            'name': 'Updated Test Item',
-            'description': 'This is an updated test item',
-            'price': 150,
-            'pictureFileName': 'updated_99.webp',
-            'catalogTypeId': 2,
-            'catalogBrandId': 2,
-            'availableStock': 20,
-            'restockThreshold': 10,
-            'maxStockThreshold': 30,
-            'onReorder': True
-        }
+        
+        id = post_data['id']
+        put_data = ItemFactory.create_with_id(id)
         put_params = self.params_creator.create_catalog_items_put_params(item_data=put_data)
 
         put_response = RequestSender.send_catalog_items_put(put_params)
         self.assertEqual(put_response.status_code, 201, f"Unexpected status code: {put_response.status_code}")
+        
 
-        get_params = self.params_creator.create_catalog_item_by_id_params(id=unique_id)
+        get_params = self.params_creator.create_catalog_item_by_id_params(id=put_data['id'])
         get_response = RequestSender.send_catalog_item_by_id_get(get_params)
         self.assertEqual(get_response.status_code, 200, f"Unexpected status code: {get_response.status_code}")
 
